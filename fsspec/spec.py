@@ -78,7 +78,6 @@ class AbstractFileSystem(up, metaclass=_Cached):
     """
 
     cachable = True  # this class can be cached, instances reused
-    _cached = False
     blocksize = 2 ** 22
     sep = "/"
     protocol = "abstract"
@@ -102,9 +101,8 @@ class AbstractFileSystem(up, metaclass=_Cached):
         add_docs: if True, will append docstrings from this spec to the
             specific implementation
         """
-        if self._cached:
-            # reusing instance, don't change
-            return
+        # _cached is just for compat with downstream libraries. Has no
+        # use / effect anymore.
         self._cached = True
         self._intrans = False
         self._transaction = None
